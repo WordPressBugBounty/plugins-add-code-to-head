@@ -1,24 +1,36 @@
 # Add Code To Head #
-**Contributors:** HBJitney LLC \
-**Tags:** code, javascript, css, template \
-**Requires at least:** 3.3.2 \
-**Tested up to:** 6.7.1 \
-**License:** GPLv3 \
-**License URI:** http://www.gnu.org/licenses/gpl-3.0.html \
+**Tags:** code, javascript, css, template<br>
+**Requires at least:** 6.1<br>
+**Tested up to:** 6.9.0<br>
+**Requires PHP:** 8.5<br>
+**License:** GPLv3<br>
+**License URI:** http://www.gnu.org/licenses/gpl-3.0.html<br>
 **Stable tag:** trunk
 
 Add custom Javascript/HTML/CSS codes to the page head without editing the template.
 
 ## Description ##
 
-Intended users: Template Designers, Developer
+Intended users: Template Designers, Developer, Admins
 
-If you wish to add any custom HTML to the bottom of each page's head, then this plugin is for you. For example, you can add some custom CSS, a link to an external javascript file or something else.
+If you wish to add any custom HTML to each page's header, then this plugin is for you.
 
-The problem with editing the template directly is if you ever update the template, your changes will be lost. This plugin works around this issue.
+This is useful for verifying you are the owner of the website to services such
+as Mailchimp or Google. You can quickly add the verification codes to your page
+header without having to edit your site's template.
+
+In general, you can add custom CSS, a link to an external javascript file or
+something else. While it is generally recommended to create a child template if
+you're going to make extensive, permanent changes to a template, there may be
+instances where a small change or two is needed that wouldn't justify the
+creation of a child template&mdash;or your current template might not support
+child templates. You should nearly always avoid editing a template directly,
+because your changes will be lost when you next update the template.
+
+This plugin is not affected by template changes.
 
 ## Installation ##
-### Via your Blog’s install plugin option ###
+### Via the WordPress install plugin option ###
 
 * Click the big 'Install Plugin' button in the plugin description window
 
@@ -38,13 +50,19 @@ If you have multiple files in a directory, use this method.
 
 ## Frequently Asked Questions ##
 
+### Q. Will the latest changes resolve CVE-2025-48314? ###
+
+The plugin now normalizes and sanitizes saved head code for users who do not have the `unfiltered_html` capability before it is stored, closing the stored XSS vector described in CVE-2025-48314 for untrusted roles. Site owners who intentionally grant `unfiltered_html` (such as administrators on single-site installs) still bypass this sanitization by design so they can insert arbitrary code.
+
+**Bottom line:** the vulnerability of executing arbitrary code in the admin screens should be eliminated, however the functionality exists for _public_ pages and is intentional. Only advanced users who know what they are doing should use this plugin.
+
 ### Q. Why aren't my codes being added to the absolute end of the head? ###
 
 Another plugin or the theme is adding their own codes to the head _after_ this plugin runs.
 
-### Q. I don't know HTML/Javascript/CSS; can I still use this plugin? ###
+### Q. I don't know HTML/JavaScript/CSS; can I still use this plugin? ###
 
-Yes, but you may easily get confused and mess up your whole site. It is better to learn the code first before you use this plugin.
+You can, but you shouldn't. It is far too easy to break your site if you don't know what you are doing.
 
 ### Q. [Wordfence][wf] says something like "A potentially unsafe operation has been detected in your request to this site."
 
@@ -80,6 +98,15 @@ Absolutely!
 Plugin Icon (CC BY 3.0) by [DeniShop](https://www.iconfinder.com/denir)
 
 ## Changelog ##
+### 1.21 ###
+* Fixed bug that caused extra space to be added to head contents.
+* Code quality and best-practice pass. No database schema changes; existing saved code is unaffected.
+
+### 1.19 ###
+* Fix for CVE ID: CVE‑2025‑48314
+* Stored head code is sanitized for users without `unfiltered_html`, mitigating the cross-site scripting (XSS) issue for untrusted roles
+* Note: arbitrary code insertion on public pages remains intentional (and is the point of this plugin).
+
 ### 1.17 ###
 * Tested compatibility up to WP 6.7.1
 * Added note about Wordfence error that might be encountered
@@ -96,7 +123,7 @@ Plugin Icon (CC BY 3.0) by [DeniShop](https://www.iconfinder.com/denir)
 
 ### 1.10 ###
 * Screenshot updated
-* Compatibility with latest Wordpress
+* Compatibility with latest WordPress
 
 ### 1.09 ###
 * Readme file added
@@ -106,9 +133,8 @@ Plugin Icon (CC BY 3.0) by [DeniShop](https://www.iconfinder.com/denir)
 
 ## Upgrade Notice ##
 
-### 1.17 ###
-* Verified Compatible with WP 6.7.1
-* Added note about potential Wordfence issue to the readme
-* No other changes
+### 1.23 ###
+* No-change release
+* Internal synchronization; no effect on users (you can stay on v1.21 if you like)
 
 [wf]:https://www.wordfence.com
